@@ -28,6 +28,9 @@ git clone https://github.com/LukasVaicaitis/battleships
 cd battleships-back
 npm install
 pm2 start ecosystem.config.js
+
+pm2 logs # <-To see server logs
+pm2 stop all # <- To shutdown server
 ```
 pm2 needs to be installed globally.
 

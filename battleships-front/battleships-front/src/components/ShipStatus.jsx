@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Text, Stack } from "@mantine/core";
 
 const ShipStatus = ({ sunkShips, shipCounts }) => {
-    // Sukuriamas objektas nuskandintų laivų skaičiui pagal dydį saugoti
     const sunkShipCounts = {
         size1: 0,
         size2: 0,
@@ -11,10 +10,9 @@ const ShipStatus = ({ sunkShips, shipCounts }) => {
         size5: 0,
     };
 
-    // Iteruojame per nuskandintus laivus ir suskaičiuojame kiekvieno dydžio nuskandintus laivus
+    // Iteruojama per nuskandintus laivus ir skaiciuojami kiekvieno dydžio nuskandinti laivai
     Object.values(sunkShips).forEach((ship) => {
         if (ship.hits >= ship.size) {
-            // Laivas laikomas nuskandintu, jei pataikymų skaičius yra lygus arba didesnis už jo dydį
             sunkShipCounts[`size${ship.size}`] += 1;
         }
     });
@@ -26,14 +24,23 @@ const ShipStatus = ({ sunkShips, shipCounts }) => {
             </Text>
             <Stack spacing="sm">
                 {[1, 2, 3, 4, 5].map((size) => {
-                    const sunkCount = sunkShipCounts[`size${size}`] || 0; // Nuskandintų laivų skaičius
-                    const remainingCount = shipCounts[`size${size}`] - sunkCount; // Likę nenuskandinti laivai
+                    const sunkCount = sunkShipCounts[`size${size}`] || 0; // Nuskandintų laivų skaičius pagal dydį
+                    const remainingCount = shipCounts[`size${size}`] - sunkCount; // Likę nenuskandinti laivai pagal dydį
 
+                    // Keiciamas raktas pagal likusiu laivu dydi, kad butu galima kelis kartus naudoti ta pacia animacija
                     return (
-                        <Box key={size}>
-                            <Box style={{ display: "flex", alignItems: "left" }}>
+                        <Box key={`${size}-${remainingCount}`}>
+                            <Box
+                                style={{
+                                    display: "flex",
+                                    alignItems: "left",
+                                    position: "relative",
+                                    animation:
+                                        remainingCount !== shipCounts[`size${size}`] ? "shake 0.5s ease-in-out" : "none",
+                                }}
+                            >
                                 <Box style={{ display: "flex", marginRight: "10px" }}>
-                                    {/* Kuriami kvadratai, kurie reprezentuoja laivo dydį */}
+                                    {/* Laivų atvaizdavimas kvadratais */}
                                     {new Array(size).fill("■").map((_, index) => (
                                         <Box
                                             key={index}
@@ -47,8 +54,13 @@ const ShipStatus = ({ sunkShips, shipCounts }) => {
                                         />
                                     ))}
                                 </Box>
-                                {/* Rodo likusių laivų skaičių */}
-                                <Text>
+                                <Text
+                                    style={{
+                                        fontWeight: remainingCount === 0 ? "bold" : "normal",
+                                        animation:
+                                            remainingCount !== shipCounts[`size${size}`] ? "shake 0.5s ease-in-out" : "none", // Animacijos aktyvavimas pagal pasikeitusį skaičių
+                                    }}
+                                >
                                     {remainingCount === 0
                                         ? "Visi laivai nuskandinti"
                                         : `${remainingCount} ${remainingCount === 1 ? "Laivas" : "Laivai"}`}
@@ -58,6 +70,19 @@ const ShipStatus = ({ sunkShips, shipCounts }) => {
                     );
                 })}
             </Stack>
+
+            {/* CSS animacija */}
+            <style>
+                {`
+                @keyframes shake {
+                    0% { transform: translateX(0); }
+                    25% { transform: translateX(-5px); }
+                    50% { transform: translateX(5px); }
+                    75% { transform: translateX(-5px); }
+                    100% { transform: translateX(0); }
+                }
+                `}
+            </style>
         </Box>
     );
 };

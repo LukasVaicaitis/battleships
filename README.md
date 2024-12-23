@@ -1,8 +1,43 @@
-# React + Vite
+# Battleships Internship Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Battleships game with a Node.js backend and a Vite.js React frontend. The backend handles the game logic, and the frontend provides the user interface.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project consists of two main folders:
+
+- `battleships-back/`: Node.js server with game logic.
+- `battleships-front/`: Vite.js frontend.
+
+## Requirements
+
+Before you begin, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- [PM2](https://pm2.keymetrics.io/)
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/LukasVaicaitis/battleships
+```
+### 2. Run the backend server
+```bash
+cd battleships-back
+npm install
+pm2 start ecosystem.config.js
+
+pm2 logs # <-To see server logs
+pm2 stop all # <- To shutdown server
+```
+pm2 needs to be installed globally.
+
+### 3. Run the frontend application in a new terminal window
+```bash
+cd battleships-front
+npm install
+npm run dev
+```
+ The website can now be accessed at http://localhost:5173/

@@ -1,28 +1,37 @@
-import React from "react";
 import { Box, Text, Button, TextInput } from "@mantine/core";
 import { startGame } from "../api/api";
 
-const WelcomeScreen = ({ playerName, setPlayerName, setIsGameStarted, setGameId, setRealBoard, setGuessBoard }) => {
+const WelcomeScreen = ({ playerName, setPlayerName, setIsGameStarted, setGuessBoard }) => {
     const handleStartGame = async () => {
         try {
             // Išvalome išsaugotą gameId, jei toks yra
             localStorage.clear("gameId");
 
             // API funkcija pradeti žaidimui
-            const { gameId, board } = await startGame();
+            const { gameId } = await startGame();
 
             // Saugomas žaidėjo vardas ir žaidimo ID
             localStorage.setItem("playerName", playerName);
             localStorage.setItem("gameId", gameId);
 
             // Nustatome būseną su gautais duomenimis
-            setGameId(gameId);
-            setRealBoard(board);
             setGuessBoard(Array(10).fill(null).map(() => Array(10).fill(null)));
             setIsGameStarted(true);
-            setPlayerName(playerName);
 
             console.log("Žaidimo ID: " + gameId);
+
+            // //Test
+            // //==================
+            // const boardGrid = [];
+
+            // while (board.length) {
+            //     boardGrid.push(board.splice(0, 10));//Po 10 elementu
+            // }
+            // boardGrid.forEach((row) => {
+            //     console.log(row.map(cell => cell).join(" "));
+            // });
+            // //==================
+
         } catch (error) {
             console.error("Klaida pradedant žaidimą:", error);
             alert("Nepavyko pradėti žaidimo. Bandykite dar kartą.");
@@ -55,7 +64,7 @@ const WelcomeScreen = ({ playerName, setPlayerName, setIsGameStarted, setGameId,
                 Žaidimas Laivų Mūšis
             </Text>
 
-            {/* Vartotojo vardo įvedimo laukas */}
+            {/* Naudotojo vardo įvedimo laukas */}
             <TextInput
                 placeholder="Įveskite savo vardą"
                 value={playerName}

@@ -19,7 +19,7 @@ app.post("/start", (req, res) => {
     const game = generateGame(); // Sukuria naują lentą ir laivus
     games[gameId] = game; // Išsaugoma atmintyje
 
-    res.json({ gameId, board: game.board }); // Grąžina žaidimo ID ir lentą
+    res.json({ gameId }); // Grąžina žaidimo ID 
 });
 
 // Apdoroti žaidėjo ėjimą

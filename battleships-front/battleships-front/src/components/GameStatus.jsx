@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Button } from "@mantine/core";
 
 const GameStatus = ({ gameOutcome, restartGame }) => (

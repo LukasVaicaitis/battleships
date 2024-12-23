@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Button, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";

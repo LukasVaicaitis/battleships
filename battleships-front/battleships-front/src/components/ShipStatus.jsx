@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Text, Stack } from "@mantine/core";
 
 const ShipStatus = ({ sunkShips, shipCounts }) => {

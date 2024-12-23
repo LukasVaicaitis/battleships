@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Flex, Transition } from "@mantine/core";
 import WelcomeScreen from "./components/WelcomeScreen";
 import GameBoard from "./components/GameBoard";
@@ -14,9 +14,6 @@ function App() {
   const [shipCounts, setShipCounts] = useState({ size1: 3, size2: 3, size3: 2, size4: 1, size5: 1 }); // Laivų skaičius pagal dydį
   const [sunkShips, setSunkShips] = useState({ size1: 0, size2: 0, size3: 0, size4: 0, size5: 0 }); // Nuskandinti laivai
 
-  const [realBoard, setRealBoard] = useState(
-    Array(10).fill(null).map(() => Array(10).fill(null))
-  ); // Tikroji (paslėpta) žaidimo lenta
   const [guessBoard, setGuessBoard] = useState(
     Array(10).fill(null).map(() => Array(10).fill(null))
   ); // Žaidėjo spėjimų lenta
@@ -24,7 +21,6 @@ function App() {
   const [playerName, setPlayerName] = useState(""); // Žaidėjo vardas
   const [isGameStarted, setIsGameStarted] = useState(false); // Ar žaidimas prasidėjo
   const [gameOutcome, setGameOutcome] = useState(""); // Žaidimo rezultatas ("pergalė", "pralaimėjimas" arba "")
-  const [gameId, setGameId] = useState(""); // Žaidimo ID
 
   // Paimamas žaidėjo vardas iš vietinės atminties
   useEffect(() => {
@@ -55,7 +51,7 @@ function App() {
         }
 
         // Išrenkami kintamieji iš atsakymo
-        const { result: moveResult, board, sunkShips, gameStatus } = result;
+        const { result: moveResult, sunkShips, gameStatus } = result;
 
         // Atnaujiname spėjimų lentą pagal rezultatą
         setGuessBoard((prevGuessBoard) => {
@@ -64,7 +60,6 @@ function App() {
           return newBoard;
         });
 
-        setRealBoard(board);
         setSunkShips(sunkShips);
 
         if (moveResult === "miss") {
@@ -87,11 +82,9 @@ function App() {
   // Žaidimo atstatymo funkcija
   const resetGame = () => {
     setShotsRemaining(25);
-    setRealBoard(Array(10).fill(null).map(() => Array(10).fill(null)));
     setGuessBoard(Array(10).fill(null).map(() => Array(10).fill(null)));
     setGameOutcome("");
     setIsGameStarted(false);
-    setGameId("");
 
     setShipCounts({ size1: 3, size2: 3, size3: 2, size4: 1, size5: 1 });
     setSunkShips({ size1: 0, size2: 0, size3: 0, size4: 0, size5: 0 });
@@ -124,8 +117,6 @@ function App() {
               playerName={playerName}
               setPlayerName={setPlayerName}
               setIsGameStarted={setIsGameStarted}
-              setGameId={setGameId}
-              setRealBoard={setRealBoard}
               setGuessBoard={setGuessBoard}
             />
           </Box>

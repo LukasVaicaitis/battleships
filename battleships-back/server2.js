@@ -19,7 +19,7 @@ app.post("/start", (req, res) => {
     const game = generateGame(); // Sukuria naują lentą ir laivus
     games[gameId] = game; // Išsaugoma atmintyje
 
-    res.json({ gameId, board: game.board }); // Grąžina žaidimo ID ir lentą
+    res.json({ gameId }); // Grąžina žaidimo ID 
 });
 
 // Apdoroti žaidėjo ėjimą
@@ -38,4 +38,4 @@ app.get("/health", (req, res) => {
     res.status(200).send("Serveris sveikas!");
 });
 
-app.listen(PORT, () => console.log(`Serveris 1 veikia ant ${PORT} porto`));
+app.listen(PORT, () => console.log(`Serveris 2 veikia ant ${PORT} porto`));
